@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lillé - Pre-loved Fashion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;600;700&family=Cormorant+Garamond:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --header-bg: #ffffff;
+            --border-color: #f0f0f0;
+            --card-bg: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --section-bg: #f9f9f9;
+            --footer-bg: #000000;
+            --footer-text: #ffffff;
+            --btn-bg: #000000;
+            --btn-text: #ffffff;
+            --btn-hover: #333333;
+            --star-color: #ddd;
+            --star-active: #000000;
+        }
+
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --header-bg: #1e1e1e;
+            --border-color: #333333;
+            --card-bg: #1e1e1e;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --section-bg: #2d2d2d;
+            --footer-bg: #000000;
+            --footer-text: #ffffff;
+            --btn-bg: #ffffff;
+            --btn-text: #000000;
+            --btn-hover: #e0e0e0;
+            --star-color: #555;
+            --star-active: #ffffff;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--header-bg);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .dark-mode-toggle i {
+            font-size: 20px;
+            transition: transform 0.5s ease;
+        }
+
+        .dark-mode .dark-mode-toggle i {
+            transform: rotate(180deg);
+        }
+
+        /* Header Styles */
+        header {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            background-color: var(--header-bg);
+            z-index: 100;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 38px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+
+        nav ul li a.active {
+            color: #888;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--text-color);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+            padding: 60px 5%;
+            min-height: 70vh;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 5%;
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+                url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            transition: background 0.3s;
+        }
+
+        .dark-mode .hero {
+            background: linear-gradient(rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.9)),
+                url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 18px;
+        }
+
+        .worldwide-delivery {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background-color: var(--btn-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Products Section */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--card-bg);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px var(--shadow-color);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 350px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .dark-mode .product-image {
+            background-color: #2d2d2d;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .product-description {
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .available {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .sold {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        .hot {
+            background-color: #fff3e0;
+            color: #ef6c00;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-info,
+        .contact-form {
+            padding: 30px;
+            background-color: var(--section-bg);
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .contact-info h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .contact-method i {
+            font-size: 20px;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        /* Newsletter Section */
+        .newsletter {
+            padding: 60px 5%;
+            background-color: var(--section-bg);
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-right: none;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+
+        .newsletter-form button {
+            padding: 12px 25px;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background-color: var(--btn-hover);
+        }
+
+        /* Reviews Section */
+        .reviews {
+            padding: 60px 5%;
+            text-align: center;
+            background-color: var(--section-bg);
+            transition: background-color 0.3s;
+        }
+
+        .reviews-title {
+            font-size: 32px;
+            margin-bottom: 40px;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .review-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            text-align: left;
+            transition: all 0.3s;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .review-date {
+            color: var(--text-color);
+            opacity: 0.7;
+            font-size: 14px;
+        }
+
+        .stars {
+            color: var(--star-color);
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .stars i {
+            margin-right: 2px;
+            transition: color 0.2s;
+        }
+
+        .stars i.active {
+            color: var(--star-active);
+        }
+
+        .stars i.hover {
+            color: var(--star-active);
+            opacity: 0.7;
+        }
+
+        .review-text {
+            color: var(--text-color);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .rating-feedback {
+            margin-top: 10px;
+            font-weight: 600;
+            color: var(--text-color);
+            min-height: 24px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 5% 30px;
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            transition: background-color 0.3s;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: #555;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            font-size: 14px;
+            color: #999;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 32px;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--header-bg);
+                box-shadow: 0 5px 10px var(--shadow-color);
+                padding: 20px 0;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-form input {
+                border-right: 1px solid var(--border-color);
+                border-bottom: none;
+                margin-bottom: 10px;
+            }
+
+            .reviews-container {
+                grid-template-columns: 1fr;
+            }
+
+            .dark-mode-toggle {
+                top: 15px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 60px 5%;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .logo {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle" id="darkModeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">lillé</div>
+        <nav>
+            <ul id="nav-menu">
+                <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-page="sold">Sold</a></li>
+                <li><a href="#" class="nav-link" data-page="hot">Hot</a></li>
+                <li><a href="#" class="nav-link" data-page="contact">Contact Us</a></li>
+            </ul>
+            <div class="mobile-menu-btn" id="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="page-section active">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Pre-loved Fashion, Reimagined</h1>
+            <p>Discover unique, high-quality second-hand clothing pieces carefully selected for style and
+                sustainability.</p>
+            <a href="#available" class="btn">Shop Now</a>
+            <div class="worldwide-delivery">WORLDWIDE DELIVERY SERVICE</div>
+        </div>
+
+        <!-- Available Products Section -->
+        <div class="products" id="available">
+            <h2 class="section-title">Available Items</h2>
+            <div class="products-grid" id="available-products">
+                <!-- Available products will be inserted here by JavaScript -->
+            </div>
+        </div>
+
+       
+            <!-- Interactive Rating Section -->
+            <div
+                style="margin-top: 60px; padding: 40px; background: var(--card-bg); border-radius: 8px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                <h3 style="margin-bottom: 20px; font-family: 'Playfair Display', serif;">Rate Our Service</h3>
+                <p style="margin-bottom: 20px;">Click on the stars to rate your experience</p>
+
+                <div class="stars" id="interactive-rating">
+                    <i class="far fa-star" data-rating="1"></i>
+                    <i class="far fa-star" data-rating="2"></i>
+                    <i class="far fa-star" data-rating="3"></i>
+                    <i class="far fa-star" data-rating="4"></i>
+                    <i class="far fa-star" data-rating="5"></i>
+                </div>
+
+                <div class="rating-feedback" id="rating-feedback"></div>
+            </div>
+        </div>
+
+        <!-- Newsletter Section -->
+        <div class="newsletter">
+            <h2>Stay Updated</h2>
+            <p>Subscribe to our newsletter to be the first to know about new arrivals and exclusive offers.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Sold Items Section -->
+    <section id="sold" class="page-section">
+        <div class="products">
+            <h2 class="section-title">Sold Items</h2>
+            <p style="text-align: center; margin-bottom: 40px;">These items are no longer available but showcase our
+                unique selection.</p>
+            <div class="products-grid" id="sold-products">
+                <!-- Sold products will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Hot Items Section -->
+    <section id="hot" class="page-section">
+        <div class="products">
+            <h2 class="section-title">Hot Items</h2>
+            <p style="text-align: center; margin-bottom: 40px;">These items are trending and selling fast. Get them
+                before they're gone!</p>
+            <div class="products-grid" id="hot-products">
+                <!-- Hot products will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="page-section">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Get In Touch</h3>
+                <p>We'd love to hear from you. Reach out to us through any of the following methods:</p>
+
+                <div class="contact-method">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>Email</strong><br>
+                        <a href="mailto:info@lille.com">info@lille.com</a>
+                    </div>
+                </div>
+
+                <div class="contact-method">
+                    <i class="fab fa-whatsapp"></i>
+                    <div>
+                        <strong>WhatsApp</strong><br>
+                        <a href="https://wa.me/0950547644">0950547644</a>
+                    </div>
+                </div>
+
+                <div class="contact-method">
+                    <i class="fab fa-instagram"></i>
+                    <div>
+                        <strong>Instagram</strong><br>
+                        <a href="https://www.instagram.com/ayham_kahlous?igsh=NnppM2ZrMXBzM3g3">@ayham_kahlous</a>
+                    </div>
+                </div>
+
+                <div class="contact-method">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Address</strong><br>
+                        123 Fashion Street, Paris, France
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h3>Send Us a Message</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>lillé</h3>
+                <p>Pre-loved fashion with a story. Sustainable style for the conscious consumer.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/ayham_kahlous?igsh=NnppM2ZrMXBzM3g3"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-threads"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="#" class="nav-link" data-page="home">Available Items</a></li>
+                    <li><a href="#" class="nav-link" data-page="hot">Hot Deals</a></li>
+                    <li><a href="#" class="nav-link" data-page="sold">Sold Archive</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Information</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Returns & Exchanges</a></li>
+                    <li><a href="#">Size Guide</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><a href="mailto:info@lille.com">info@lille.com</a></li>
+                    <li><a href="tel:0950547644">0950547644</a></li>
+                    <li>123 Fashion Street, Paris, France</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 lillé. All rights reserved. | Worldwide Delivery Service
+        </div>
+    </footer>
+
+    <script>
+        // Product data - organized by category
+        const products = {
+            available: [
+                {
+                    id: 1,
+                    image: "photo/download (1).jpeg",
+                    title: "Classic White Cotton Shirt",
+                    price: "$45.00",
+                    description: "Premium quality white shirt. Size M. 100% cotton. Perfect for formal and casual occasions.",
+                    status: "available"
+                },
+                {
+                    id: 2,
+                    image: "photo/download (2).jpeg",
+                    title: "Slim Fit Dark Wash Jeans",
+                    price: "$65.00",
+                    description: "Dark wash denim jeans. Size 32x32. Stretch fabric for comfort. Perfect everyday wear.",
+                    status: "available"
+                },
+                {
+                    id: 3,
+                    image: "photo/download (3).jpeg",
+                    title: "Brown Leather Ankle Boots",
+                    price: "$120.00",
+                    description: "Genuine leather boots. Size 42. Comfortable sole. Timeless design for any season.",
+                    status: "available"
+                },
+                {
+                    id: 4,
+                    image: "photo/download (4).jpeg",
+                    title: "Cable Knit Wool Sweater",
+                    price: "$75.00",
+                    description: "Warm wool sweater. Size L. Classic cable knit pattern. Perfect for cold weather.",
+                    status: "available"
+                },
+                {
+                    id: 5,
+                    image: "photo/download (5).jpeg",
+                    title: "Beige Chino Pants",
+                    price: "$55.00",
+                    description: "Casual chino pants. Size 34x32. Versatile beige color. Perfect for business casual.",
+                    status: "available"
+                },
+                {
+                    id: 6,
+                    image: "photo/هوديي ربطة أطفال فضفاض سميك مطبوع برسوم أبجدية كرتونية بسيطة مناسب للخريف والشتاء.jpeg",
+                    title: "Black Leather Biker Jacket",
+                    price: "$180.00",
+                    description: "Genuine leather jacket. Size M. Classic biker style. Adds edge to any outfit.",
+                    status: "available"
+                },
+                {
+                    id: 7,
+                    image: "photo/download (7).jpeg",
+                    title: "White Leather Sneakers",
+                    price: "$85.00",
+                    description: "Clean white sneakers. Size 43. Leather upper. Comfortable for all-day wear.",
+                    status: "available"
+                },
+                {
+                    id: 8,
+                    image: "photo/download (8).jpeg",
+                    title: "Navy Blue Blazer",
+                    price: "$95.00",
+                    description: "Classic navy blazer. Size 40R. Perfect for formal occasions or smart casual looks.",
+                    status: "available"
+                },
+                {
+                    id: 9,
+                    image: "photo/download (9).jpeg",
+                    title: "Classic Striped T-Shirt",
+                    price: "$35.00",
+                    description: "Comfortable striped t-shirt. Size M. Cotton blend. Perfect for casual wear.",
+                    status: "available"
+                },
+                {
+                    id: 10,
+                    image: "photo/download (10).jpeg",
+                    title: "Denim Jacket",
+                    price: "$75.00",
+                    description: "Vintage denim jacket. Size M. Light wash. Perfect for layering.",
+                    status: "available"
+                }
+            ],
+            sold: [
+                {
+                    id: 11,
+                    image: "photo/download (11).jpeg",
+                    title: "Vintage Leather Handbag",
+                    price: "$120.00",
+                    description: "Genuine leather handbag. Brown color. Spacious interior with multiple compartments.",
+                    status: "sold"
+                },
+                {
+                    id: 12,
+                    image: "photo/download (12).jpeg",
+                    title: "Wool Blend Coat",
+                    price: "$150.00",
+                    description: "Warm wool blend coat. Size L. Double-breasted design. Perfect for winter.",
+                    status: "sold"
+                },
+                {
+                    id: 13,
+                    image: "photo/download (13).jpeg",
+                    title: "Silk Scarf",
+                    price: "$45.00",
+                    description: "Luxury silk scarf. Floral pattern. Versatile accessory for any outfit.",
+                    status: "sold"
+                },
+                {
+                    id: 14,
+                    image: "photo/download (14).jpeg",
+                    title: "Leather Loafers",
+                    price: "$95.00",
+                    description: "Genuine leather loafers. Size 41. Comfortable and stylish for any occasion.",
+                    status: "sold"
+                },
+                {
+                    id: 15,
+                    image: "photo/download (15).jpeg",
+                    title: "Cashmere Sweater",
+                    price: "$125.00",
+                    description: "Luxury cashmere sweater. Size M. Soft and warm. Perfect for cold weather.",
+                    status: "sold"
+                },
+                {
+                    id: 16,
+                    image: "photo/download (16).jpeg",
+                    title: "Pleated Skirt",
+                    price: "$55.00",
+                    description: "Elegant pleated skirt. Size M. Midi length. Perfect for formal occasions.",
+                    status: "sold"
+                },
+                {
+                    id: 17,
+                    image: "photo/download (17).jpeg",
+                    title: "Canvas Backpack",
+                    price: "$65.00",
+                    description: "Durable canvas backpack. Multiple pockets. Perfect for everyday use.",
+                    status: "sold"
+                },
+                {
+                    id: 18,
+                    image: "photo/download (18).jpeg",
+                    title: "Knit Cardigan",
+                    price: "$70.00",
+                    description: "Comfortable knit cardigan. Size L. Button front. Perfect for layering.",
+                    status: "sold"
+                },
+                {
+                    id: 19,
+                    image: "photo/download (19).jpeg",
+                    title: "Linen Shirt",
+                    price: "$50.00",
+                    description: "Breathable linen shirt. Size M. Light blue color. Perfect for summer.",
+                    status: "sold"
+                },
+                {
+                    id: 20,
+                    image: "photo/download (20).jpeg",
+                    title: "Suede Boots",
+                    price: "$110.00",
+                    description: "Stylish suede boots. Size 39. Chunky heel. Perfect for autumn.",
+                    status: "sold"
+                }
+            ],
+            hot: [
+                {
+                    id: 21,
+                    image: "photo/download (21).jpeg",
+                    title: "Designer Sunglasses",
+                    price: "$85.00",
+                    description: "Luxury designer sunglasses. UV protection. Classic aviator style.",
+                    status: "hot"
+                },
+                {
+                    id: 22,
+                    image: "photo/download (22).jpeg",
+                    title: "Velvet Blazer",
+                    price: "$130.00",
+                    description: "Luxurious velvet blazer. Size M. Deep blue color. Perfect for evening events.",
+                    status: "hot"
+                },
+                {
+                    id: 23,
+                    image: "photo/download (23).jpeg",
+                    title: "Leather Belt",
+                    price: "$45.00",
+                    description: "Genuine leather belt. Adjustable size. Classic buckle design.",
+                    status: "hot"
+                },
+                {
+                    id: 24,
+                    image: "photo/download (24).jpeg",
+                    title: "Knit Beanie",
+                    price: "$25.00",
+                    description: "Warm knit beanie. One size fits all. Perfect for cold weather.",
+                    status: "hot"
+                },
+                {
+                    id: 25,
+                    image: "photo/download (25).jpeg",
+                    title: "Silk Blouse",
+                    price: "$75.00",
+                    description: "Elegant silk blouse. Size S. Flowy design. Perfect for special occasions.",
+                    status: "hot"
+                },
+                {
+                    id: 26,
+                    image: "photo/download (26).jpeg",
+                    title: "Wool Scarf",
+                    price: "$55.00",
+                    description: "Warm wool scarf. Striped pattern. Perfect accessory for winter.",
+                    status: "hot"
+                },
+                {
+                    id: 27,
+                    image: "photo/download (27).jpeg",
+                    title: "Leather Gloves",
+                    price: "$60.00",
+                    description: "Genuine leather gloves. Size M. Lined for extra warmth.",
+                    status: "hot"
+                },
+                {
+                    id: 28,
+                    image: "photo/download (28).jpeg",
+                    title: "Denim Overalls",
+                    price: "$85.00",
+                    description: "Vintage denim overalls. Size M. Adjustable straps. Perfect for casual wear.",
+                    status: "hot"
+                },
+                {
+                    id: 29,
+                    image: "photo/download.jpeg",
+                    title: "Cashmere Scarf",
+                    price: "$95.00",
+                    description: "Luxury cashmere scarf. Soft and warm. Perfect for cold weather.",
+                    status: "hot"
+                },
+                {
+                    id: 30,
+                    image: "photo/Productos altamente calificados a bajo precio_ Encuentra todo lo que necesitas_.jpeg",
+                    title: "Designer Handbag",
+                    price: "$250.00",
+                    description: "Luxury designer handbag. Leather construction. Spacious interior.",
+                    status: "hot"
+                }
+            ]
+        };
+
+        // Function to generate product HTML
+        function generateProductHTML(product) {
+            return `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.title}">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.title}</h3>
+                        <div class="product-price">${product.price}</div>
+                        <p class="product-description">${product.description}</p>
+                        <span class="status ${product.status}">${product.status.charAt(0).toUpperCase() + product.status.slice(1)}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to display products by category
+        function displayProducts(category, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            products[category].forEach(product => {
+                container.innerHTML += generateProductHTML(product);
+            });
+        }
+
+        // Initialize product displays when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            displayProducts('available', 'available-products');
+            displayProducts('sold', 'sold-products');
+            displayProducts('hot', 'hot-products');
+        });
+
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        // Check for saved dark mode preference
+        if (localStorage.getItem('dark-mode') === 'enabled') {
+            body.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('dark-mode', 'enabled');
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('dark-mode', 'disabled');
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-toggle').addEventListener('click', function () {
+            document.getElementById('nav-menu').classList.toggle('show');
+        });
+
+        // Navigation between pages
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // Remove active class from all links
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+                // Add active class to clicked link
+                this.classList.add('active');
+
+                // Hide all pages
+                document.querySelectorAll('.page-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                // Show the selected page
+                const pageId = this.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
+
+                // Close mobile menu if open
+                document.getElementById('nav-menu').classList.remove('show');
+            });
+        });
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
+        });
+
+        // Newsletter form submission
+        document.querySelector('.newsletter-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            alert(`Thank you for subscribing with ${ email } !We'll keep you updated.`);
+            this.reset();
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const navMenu = document.getElementById('nav-menu');
+            const menuToggle = document.getElementById('mobile-menu-toggle');
+
+            if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+                navMenu.classList.remove('show');
+            }
+        });
+
+        // Interactive Rating System
+        const ratingStars = document.querySelectorAll('#interactive-rating i');
+        const ratingFeedback = document.getElementById('rating-feedback');
+        let currentRating = 0;
+
+        // Rating feedback messages
+        const ratingMessages = {
+            1: "Poor - We're sorry to hear about your experience",
+            2: "Fair - We'll work to improve",
+            3: "Good - Thank you for your feedback",
+            4: "Very Good - We're glad you enjoyed our service",
+            5: "Excellent - Thank you for the perfect rating!"
+        };
+
+        // Initialize stars as empty
+        ratingStars.forEach(star => {
+            star.classList.remove('fas', 'far');
+            star.classList.add('far');
+        });
+
+        // Add event listeners to stars
+        ratingStars.forEach(star => {
+            // Click event
+            star.addEventListener('click', function () {
+                const rating = parseInt(this.getAttribute('data-rating'));
+                currentRating = rating;
+
+                // Update stars display
+                ratingStars.forEach((s, index) => {
+                    s.classList.remove('fas', 'far');
+                    if (index < rating) {
+                        s.classList.add('fas', 'active');
+                    } else {
+                        s.classList.add('far');
+                    }
+                });
+
+                // Show feedback message
+                ratingFeedback.textContent = ratingMessages[rating];
+            });
+
+            // Hover events
+            star.addEventListener('mouseover', function () {
+                const rating = parseInt(this.getAttribute('data-rating'));
+
+                ratingStars.forEach((s, index) => {
+                    s.classList.remove('hover');
+                    if (index < rating) {
+                        s.classList.add('hover');
+                    }
+                });
+            });
+
+            star.addEventListener('mouseout', function () {
+                ratingStars.forEach(s => {
+                    s.classList.remove('hover');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
